@@ -16,6 +16,8 @@ import org.glyptodon.guacamole.servlet.GuacamoleHTTPTunnelServlet;
 
 public class TutorialGuacamoleTunnelServlet extends GuacamoleHTTPTunnelServlet {
 
+	
+	
 	@Override
     protected GuacamoleTunnel doConnect(HttpServletRequest request) throws GuacamoleException {
 
@@ -26,7 +28,7 @@ public class TutorialGuacamoleTunnelServlet extends GuacamoleHTTPTunnelServlet {
         // VNC connection information
         GuacamoleConfiguration config = new GuacamoleConfiguration();
         config.setProtocol("vnc");
-        config.setParameter("hostname", "192.168.1.103");
+        config.setParameter("hostname", "10.17.0.44");
         config.setParameter("port", "5900");
         config.setParameter("password", "tz8888");
 

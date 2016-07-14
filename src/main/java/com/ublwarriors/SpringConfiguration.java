@@ -1,22 +1,26 @@
 package com.ublwarriors;
 
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.catalina.connector.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
-import org.springframework.boot.context.embedded.Ssl;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.util.SocketUtils;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
-import com.ublwarriors.controller.HelloServlet;
-import com.ublwarriors.guacamole.net.TutorialGuacamoleTunnelServlet;
+import com.ublwarriors.guacamole.net.StandardGuacamoleTunnelServlet;
 
 @EnableAutoConfiguration
 @Configuration
@@ -28,14 +32,33 @@ public class SpringConfiguration {
 	public ServletRegistrationBean servletRegistrationBean()
 	{
 		printStacks();
-		return new ServletRegistrationBean(new TutorialGuacamoleTunnelServlet(), "/tunnel");
+		ServletRegistrationBean bean = new ServletRegistrationBean(new StandardGuacamoleTunnelServlet(), "/tunnel");
+		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		return bean;
+	}
+	
+	@Bean
+	public HiddenHttpMethodFilter HiddenHttpMethodFilter()
+	{
+		return new HiddenHttpMethodFilter(){
+	        @Override
+	        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+	                throws ServletException, IOException
+	        {
+	            if("POST".equals(request.getMethod()) && request.getRequestURI().startsWith("/tunnel")) {
+	                filterChain.doFilter(request, response);
+	            } else {
+	                super.doFilterInternal(request, response, filterChain);
+	            }
+	        }
+	    };
 	}
 	
 	@Bean
 	public Integer port() {
 		return SocketUtils.findAvailableTcpPort();
 	}
-
+	
 	@Bean
 	public EmbeddedServletContainerFactory servletContainer() {
 		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
@@ -49,12 +72,7 @@ public class SpringConfiguration {
 		return connector;
 	}
 	
-	@Bean
-	public ServletRegistrationBean helloServletBean()
-	{
-		printStacks();
-		return new ServletRegistrationBean(new HelloServlet(), "/helloServlet");
-	}
+
 	
 	private void printStacks()
 	{
