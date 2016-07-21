@@ -2,6 +2,8 @@ package com.ublwarriors.dao;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class ConnectionHistoryDao {
 	private String username;
 	private Date startDate;
@@ -30,6 +32,11 @@ public class ConnectionHistoryDao {
 	}
 	public void setConnectionName(String connectionName) {
 		this.connectionName = connectionName;
+	}
+	@Override
+	public String toString() {
+		return "ConnectionHistoryDao [username=" + username + ", startDate=" + startDate + ", duration=" + duration
+				+ ", connectionName=" + connectionName + "]";
 	}
 	
 }

@@ -1,7 +1,8 @@
 package com.ublwarriors.message;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ublwarriors.guacamole.model.ConnectionGroup;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ConnectionGroupValue extends EntryValue {
 	private ConnectionGroup group;
 
@@ -20,4 +21,11 @@ public class ConnectionGroupValue extends EntryValue {
 	public ConnectionGroupValue(){
 		this.name = group.getConnectionGroupName();
 	}
+
+	@Override
+	public String toString() {
+		return "ConnectionGroupValue [group=" + group + ", name=" + name + ", Id=" + Id + "]";
+	}
+
+	
 }

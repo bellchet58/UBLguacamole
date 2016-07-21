@@ -11,10 +11,10 @@ import com.ublwarriors.message.Quote;
 import com.ublwarriors.util.PhaseDictionary;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping
 public class PanelController extends ServiceSupport{
 	
-	@RequestMapping(value="/connectionsList")
+	@RequestMapping(value="/user/connectionsList")
 	public Quote getConnectionList()
 	{
 		Quote result = new Quote();
@@ -24,7 +24,7 @@ public class PanelController extends ServiceSupport{
 		return result;
 	}
 	
-	@RequestMapping(value="/recentConnections")
+	@RequestMapping(value="/user/recentConnections")
 	public Quote getRecentConnections()
 	{
 		Quote result = new Quote();

@@ -33,8 +33,8 @@ public class SignUpController extends ServiceSupport{
 			user.setUsername(name);
 			Quote result = new Quote();
 			try{
-				user.setPasswordHash(SecurityTools.hashBinary(password));
-				user.setPasswordSalt(SecurityTools.getSaltedHashBinary(password));
+				user.setPasswordSalt(SecurityTools.getSalt());
+				user.setPasswordHash(SecurityTools.hash(password, user.getPasswordSalt()));
 				user = userService.addUser(user);
 				result.setType(PhaseDictionary.SUCCESS);
 				result.setValue(new UserValue(user));
@@ -49,5 +49,7 @@ public class SignUpController extends ServiceSupport{
 		}
 		
 	}
+	
+
 	
 }

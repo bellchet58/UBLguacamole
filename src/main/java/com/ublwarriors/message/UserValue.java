@@ -1,5 +1,7 @@
 package com.ublwarriors.message;
 
+import java.util.Arrays;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ublwarriors.guacamole.model.User;
 import com.ublwarriors.guacamole.model.UserWithBLOBs;
@@ -33,5 +35,10 @@ public class UserValue extends EntryValue {
 	public void setPasswordHash(byte[] passwordHash) {
 		this.passwordHash = passwordHash;
 	}
+	@Override
+	public String toString() {
+		return "UserValue [name=" + name + ", Id=" + Id + "]";
+	}
+	
 	
 }

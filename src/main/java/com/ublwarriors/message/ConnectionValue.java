@@ -2,10 +2,11 @@ package com.ublwarriors.message;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ublwarriors.dao.ConnectionHistoryDao;
 import com.ublwarriors.guacamole.model.Connection;
 import com.ublwarriors.guacamole.model.ConnectionParameter;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ConnectionValue extends EntryValue{
 	private Connection conn;
 	private List<ConnectionParameter> params;
@@ -42,5 +43,14 @@ public class ConnectionValue extends EntryValue{
 	public void setParams(List<ConnectionParameter> params) {
 		this.params = params;
 	}
+
+	@Override
+	public String toString() {
+		return "ConnectionValue [conn=" + conn + ", params=" + params + ", history=" + history + ", name=" + name
+				+ ", Id=" + Id + "]";
+	}
+
+	
+	
 	
 }

@@ -26,6 +26,13 @@ public class ListValue<T> extends Value {
 	public void setList(List<T> list) {
 		this.list = list;
 	}
+
+	@Override
+	public String toString() {
+		return "ListValue [list=" + list + ", Id=" + Id + "]";
+	}
+
+	
 	
 	
 	

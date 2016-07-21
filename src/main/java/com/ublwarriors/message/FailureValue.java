@@ -22,5 +22,12 @@ public class FailureValue extends Value {
 		this.description = description;
 		this.Id = -1;
 	}
+
+	@Override
+	public String toString() {
+		return "FailureValue [description=" + description + ", Id=" + Id + "]";
+	}
+
+	
 	
 }

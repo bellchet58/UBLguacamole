@@ -16,19 +16,20 @@ import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
 import org.springframework.util.SocketUtils;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import com.ublwarriors.guacamole.net.StandardGuacamoleTunnelServlet;
 
-@EnableAutoConfiguration
 @Configuration
 public class SpringConfiguration {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Bean
+	@Primary
 	public ServletRegistrationBean servletRegistrationBean()
 	{
 		printStacks();
@@ -83,4 +84,6 @@ public class SpringConfiguration {
 			logger.debug(elem.toString());
 		}
 	}
+	
+	
 }

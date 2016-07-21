@@ -192,4 +192,12 @@ public class Connection {
     public void setMaxConnectionsPerUser(Integer maxConnectionsPerUser) {
         this.maxConnectionsPerUser = maxConnectionsPerUser;
     }
+
+	@Override
+	public String toString() {
+		return "Connection [connectionId=" + connectionId + ", connectionName=" + connectionName + ", parentId="
+				+ parentId + ", protocol=" + protocol + ", maxConnections=" + maxConnections
+				+ ", maxConnectionsPerUser=" + maxConnectionsPerUser + "]";
+	}
+    
 }

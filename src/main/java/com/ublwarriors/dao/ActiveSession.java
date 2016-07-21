@@ -2,6 +2,8 @@ package com.ublwarriors.dao;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class ActiveSession {
 	private Integer connectionId;
 	public Integer getConnectionId() {
@@ -37,6 +39,11 @@ public class ActiveSession {
 	}
 	public void setConnectionName(String connectionName) {
 		this.connectionName = connectionName;
+	}
+	@Override
+	public String toString() {
+		return "ActiveSession [connectionId=" + connectionId + ", username=" + username + ", startDate=" + startDate
+				+ ", remoteHost=" + remoteHost + ", connectionName=" + connectionName + "]";
 	}
 	
 }

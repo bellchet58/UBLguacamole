@@ -89,6 +89,11 @@
 		    <artifactId>mybatis</artifactId>
 		    <version>3.4.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper</artifactId>
+		    <version>${pagehelper.version}</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
 			<dependency>
 			    <groupId>commons-codec</groupId>

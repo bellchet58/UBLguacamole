@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add Connection</title>
+<link rel="stylesheet" type="text/css" href="stylesheet/bootstrap.css">
+</head>
+<body>
+<div class="container">
+<form>
+  <div class="form-group">
+    <label for="inputConnectionName">连接名</label>
+    <input type="text" class="form-control" id="inputConnectionName" placeholder="name">
+  </div>
+  <div class="form-group">
+    <label for="inputLocation">所处组</label>
+    <input type="text" class="form-control" id="inputLocation" placeholder="location">
+  </div>
+  <div class="form-group">
+    <label for="inputProtocol">协议</label>
+    <select class="form-control" id="inputProcotol">
+    	<option value="vnc">vnc</option>
+    	<option value="ssh">ssh</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="inputMaxConnection">最大的可连接数</label>
+    <input type="text" class="form-control" id="inputMaxConnection" placeholder="Maximum number of connections"/>
+  </div>
+  <div class="form-group">
+    <label for="inputMaxConnectionPerUser">每个用户最大的可连接数</label>
+    <input type="text" class="form-control" id="inputMaxConnectionPerUser" placeholder="Maximum number of connections per user"/>
+  </div>
+  <h3>参数</h3>
+  <h4>网络</h4>
+  <div class="form-group">
+    <label for="inputhostname">主机地址</label>
+    <input type="text" class="form-control" id="inputhostname" placeholder="hostname"/>
+  </div>
+    <div class="form-group">
+    <label for="inputport">端口号</label>
+    <input type="text" class="form-control" id="inputport" placeholder="port"/>
+  </div>
+  <h4>认证</h4>
+    <div class="form-group">
+    <label for="inputpassword">密码</label>
+    <input type="password" class="form-control" id="inputpassword" placeholder="password"/>
+  </div>
+  <h4>显示</h4>
+  <div class="checkbox">
+    <label>
+      只读 <input type="checkbox" id="readOnly"> 
+    </label>
+    <label>
+      交换红蓝组件 <input type="checkbox" id="swapRedBlueComponent"> 
+    </label>
+  </div>
+  <div class="form-group">
+	    <label for="inputCursor">指针</label>
+	    <select class="form-control" id="inputCursor">
+	    	<option value="local">本地</option>
+	    </select>
+    </div>
+    <div class="form-group">
+	    <label for="inputColorDepth">色深</label>
+	    <select class="form-control" id="inputColorDepth">
+	    	<option value="trueColor24bit">24位真彩色</option>
+	    </select>
+    </div>
+  
+
+
+  <button class="btn btn-default">发送</button>
+  <p id="submit">发送</p>
+</form>
+</div>
+</body>
+<script src="javascripts/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="javascripts/bootstrap.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#submit").click(function(){
+		var connectionName = $("#inputConnectionName").val();
+		var inputlocation = $("#inputLocation").val();
+		var protocol = $("#inputProcotol").val();
+		var maxConnection = $("#inputMaxConnection").val()? $("#inputMaxConnection").val():null;
+		var maxConnectionPerUser = $("#inputMaxConnectionPerUser").val()?$("#inputMaxConnectionPerUser").val():null;
+		var dataConnection = {'connectionName':connectionName,'maxConnections':maxConnection,'maxConnectionsPerUser':maxConnectionPerUser,'protocol':protocol,'parentid':null,'connectionId':null};
+		var hostname = $("#inputhostname").val();
+		var port = $("#inputport").val();
+		var password = $('#inputpassword').val();
+		var readOnly = $("#readOnly").is(':checked');
+		var swapRedBlueComponent = $("#swapRedBlueComponent").is(':checked');
+		var inputCursor = $("#inputCursor").val();
+		var inputColorDepth = $("#inputColorDepth").val();
+		$.post("/connection/addConnection", dataConnection, function(msg){
+			alert(msg.type);
+			var connectionId = msg.value.conn.connectionId;
+			var paramDisplay = {'connectionId':connectionId,'hostname':hostname,'port':port,'password':password,'readonly':readOnly,'swapRedBlueComponent':swapRedBlueComponent,'inputCursor': inputCursor,'inputColorDepth':inputColorDepth};
+				$.post("/connection/addConnectionParam",paramDisplay,function(msg){
+					alert(msg.type);
+					window.location="/setting";
+				});
+			});
+	});
+});
+
+		
+
+	
+</script>
+</html>

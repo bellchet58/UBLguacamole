@@ -26,6 +26,7 @@ public class LoginController extends ServiceSupport {
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public Quote login(@RequestParam(value="username") String name, @RequestParam(value="password") String password, HttpServletRequest req)
 	{
+		logger.debug(""+userService.isExisted(name));
 		if(!userService.isExisted(name))
 		{
 			Quote result = new Quote();
@@ -40,7 +41,7 @@ public class LoginController extends ServiceSupport {
 			user = userService.selectUserByName(user);
 			String stored = new String(user.getPasswordHash());
 			try {
-				if(SecurityTools.check(password, stored))
+				if(SecurityTools.check(password,user.getPasswordHash(),user.getPasswordSalt()))
 				{
 					result.setType(PhaseDictionary.SUCCESS);
 					result.setValue(new UserValue(user));

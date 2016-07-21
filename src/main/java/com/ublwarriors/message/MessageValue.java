@@ -20,5 +20,12 @@ public class MessageValue extends Value{
 		this.Id = PhaseDictionary.ID4MESSAGE;
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "MessageValue [description=" + description + ", Id=" + Id + "]";
+	}
+
+	
 	
 }
